@@ -1,0 +1,16 @@
+<div class="card">
+    <h1>GRÁFICO</h1>
+    <p-toolbar>
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <input type="text" pInputText placeholder="ANO COMPETÊNCIA" style="width:100%; color: #ffffff;" [(ngModel)]="ano">
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <button pButton type="button" icon="pi pi-search" class="secondary" (click)="gerarGraficoBar()"
+                        title="BUSCAR"></button>
+            </div>
+        </div>
+    </p-toolbar>
+    <p-chart type="bar" [data]="data" height="400" [options]="options"></p-chart>
+</div>
+

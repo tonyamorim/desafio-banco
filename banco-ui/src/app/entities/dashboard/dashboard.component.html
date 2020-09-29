@@ -1,0 +1,43 @@
+<div class="ui-g dashboard">
+        <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <div class="ui-g card colorbox colorbox-1">
+            <div class="ui-g-2">
+                <i class="material-icons">check_circle</i>
+            </div>
+            <div class="ui-g-10">
+                <span class="colorbox-name">Último Faturamento</span>
+                <span class="colorbox-count">{{valorUltimoFaturamento | currency:'BRL':true}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <div class="ui-g card colorbox colorbox-2">
+            <div class="ui-g-2">
+                <i class="material-icons">shopping_card</i>
+            </div>
+            <div class="ui-g-10">
+                <span class="colorbox-name">Maior Faturamento</span>
+                <span class="colorbox-count">{{valorMaiorFaturamento | currency:'BRL':true}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <div class="ui-g card colorbox colorbox-3">
+            <div class="ui-g-2">
+                <i class="material-icons">report</i>
+            </div>
+            <div class="ui-g-10">
+                <span class="colorbox-name">Menor Faturamento</span>
+                <span class="colorbox-count">{{valorMenorFaturamento | currency:'BRL':true}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui-g-12 ui-md-12">
+        <app-faturamento-periodo
+            (valorUltimoFaturamento)="onChangevalorUltimoFaturamento($event)"
+            (valorMaiorFaturamento)="onChangevalorMaiorFaturamento($event)"
+            (valorMenorFaturamento)="onChangevalorMenorFaturamento($event)">
+        </app-faturamento-periodo>
+    </div>
+</div>
