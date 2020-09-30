@@ -29,16 +29,21 @@ import {
     TreeTableModule
 } from 'primeng/primeng';
 import {TableModule} from 'primeng/table';
-import {AlertAppModule} from '../../components/alert-app/alert-app.module';
-import {DashboardComponent} from "./dashboarddemo.component";
-import {FaturamentoPeriodoViewModule} from "../faturamento-periodo-view/faturamento-periodo-view.module";
 import {BrowserModule} from "@angular/platform-browser";
-import {registerLocaleData} from "@angular/common";
+import {CommonModule, registerLocaleData} from "@angular/common";
+import {ContaComponent} from "./conta.component";
+import {ContaService} from "./conta.service";
+import {SharedModule} from "../../shared/shared.module";
+import { CurrencyMaskModule } from "ng2-currency-mask";
+import {AlertAppModule} from "../../components/alert-app/alert-app.module";
+
 registerLocaleData(localePt);
 @NgModule( {
     imports: [
+        CommonModule,
         BrowserModule,
         ApplicationPipesModule,
+        SharedModule,
         AutoCompleteModule,
         TableModule,
         ToolbarModule,
@@ -66,18 +71,21 @@ registerLocaleData(localePt);
         AlertAppModule,
         InputSwitchModule,
         InputMaskModule,
-        FaturamentoPeriodoViewModule
+        CurrencyMaskModule
     ],
     declarations: [
-        DashboardComponent
+        ContaComponent
     ],
     entryComponents: [
-        DashboardComponent
+        ContaComponent
     ],
     exports: [],
-    providers: [{provide: LOCALE_ID, useValue: 'pt-BR'}],
+    providers: [
+        ContaService,
+        {provide: LOCALE_ID, useValue: 'pt-BR'}
+        ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 } )
-export class DashboardModule {
+export class ContaModule {
 
 }

@@ -2,6 +2,7 @@ package com.desafio.bancoapi.controller;
 
 import com.desafio.bancoapi.model.Conta;
 import com.desafio.bancoapi.service.ContaService;
+import com.desafio.bancoapi.util.NegocioException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import static com.desafio.bancoapi.util.HeaderUtil.criarAlertaCadastradoComSuces
 import static com.desafio.bancoapi.util.HeaderUtil.criarAlertaExclusaoComSucesso;
 import static org.springframework.http.ResponseEntity.ok;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping(URL_API)
 public class ContaController {
@@ -22,19 +24,19 @@ public class ContaController {
     private ContaService service;
 
     @PostMapping(URL_CONTA)
-    public ResponseEntity<Conta> cadastrar(@RequestBody Conta conta) throws Exception {
+    public ResponseEntity<Conta> cadastrar(@RequestBody Conta conta) throws NegocioException {
         service.cadastrar(conta);
         return ok().headers(criarAlertaCadastradoComSucesso()).body(conta);
     }
 
     @PutMapping(URL_CONTA)
-    public ResponseEntity<Conta> alterar(@RequestBody Conta conta) throws Exception {
+    public ResponseEntity<Conta> alterar(@RequestBody Conta conta) throws NegocioException {
         service.alterar(conta);
         return ok().headers(criarAlertaCadastradoComSucesso()).body(conta);
     }
 
     @DeleteMapping(URL_CONTA)
-    public ResponseEntity<Void> excluir(@RequestBody Conta conta) throws Exception {
+    public ResponseEntity<Void> excluir(@RequestBody Conta conta) throws NegocioException {
         service.excluir(conta);
         return ok().headers(criarAlertaExclusaoComSucesso()).build();
     }

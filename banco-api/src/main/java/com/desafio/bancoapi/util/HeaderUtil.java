@@ -53,7 +53,7 @@ public final class HeaderUtil {
         return createAlert("O " + entityName + " foi excluido com sucesso. ", param);
     }
 
-    public static HttpHeaders createFailureAlert(String entityName, String errorKey, String defaultMessage) {
+    public static HttpHeaders createFailureAlert(String entityName, String defaultMessage) {
         log.error("Entity processing failed, {}", defaultMessage);
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-sacApp-error", defaultMessage);

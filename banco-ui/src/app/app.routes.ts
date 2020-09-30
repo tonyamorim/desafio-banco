@@ -8,12 +8,12 @@ import { AppLoginComponent } from './pages/app.login.component';
 import { AppHelpComponent } from './pages/app.help.component';
 import { AppInvoiceComponent } from './pages/app.invoice.component';
 import { AppWizardComponent } from './pages/app.wizard.component';
-import {DashboardComponent} from "./entities/dashboard/dashboarddemo.component";
+import {ContaComponent} from "./entities/conta/conta.component";
 
 export const routes: Routes = [
     { path: '', component: AppMainComponent,
         children: [
-            { path: '', component: DashboardComponent },
+            { path: '', component: ContaComponent },
             { path: 'help', component: AppHelpComponent },
             { path: 'invoice', component: AppInvoiceComponent },
         ]

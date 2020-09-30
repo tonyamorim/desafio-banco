@@ -97,8 +97,8 @@ export class ErrorInterceptor implements HttpInterceptor {
     }
 
     private handle500(errorObj) {
-/*        setTimeout(() =>
-            this.notificationService.error('Erro 500: Erro interno do servidor' ), 1);*/
+        setTimeout(() =>
+            this.notificationService.error( errorObj.error.message ), 1);
     }
 
     handleDefaultEror(errorObj) {

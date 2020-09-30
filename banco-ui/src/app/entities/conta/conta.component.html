@@ -1,0 +1,98 @@
+<div class="card">
+    <app-alert-sys></app-alert-sys>
+    <h1>CONTA</h1>
+    <p-toolbar>
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-6" style="text-align: left;">
+                <button pButton type="button" icon="fa fa-plus" class="secondary" label="NOVO"
+                        style="color: white"
+                        (click)="prepararParaAdicionarConta()"
+                        title="NOVO" ></button>
+            </div>
+        </div>
+    </p-toolbar>
+    <div class="table-responsive">
+        <p-table #dt [value]="contas" responsive="true" expandableRows="true" dataKey="codigo">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 300px; text-align: center;">AÇÕES</th>
+                    <th pSortableColumn="cpf" style="width: 150px; text-align: center;">CPF<p-sortIcon field="cpf"></p-sortIcon></th>
+                    <th pSortableColumn="nome" style="text-align: left;">NOME<p-sortIcon field="nome"></p-sortIcon></th>
+                    <th style="width: 120px; text-align: center;">CONTA</th>
+                    <th style="width: 120px; text-align: right;">SALDO</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-contaLista>
+                <tr>
+                    <td align="center">
+                        <button pButton type="button" label="DEPÓSITO" title="DEPÓSITO" ></button>
+                        <button pButton type="button" label="SAQUE" title="SAQUE" class="red-btn" ></button>
+                        <button pButton type="button" label="TRANF" title="TRANFERÊNCIA" class="red-btn" ></button>
+                    </td>
+                    <td align="center">{{contaLista.cpf | cpf}}</td>
+                    <td align="left">{{contaLista.nome}}</td>
+                    <td align="center">{{contaLista.numero}}</td>
+                    <td align="right">{{contaLista.saldo | currency:'BRL':true}}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td [attr.colspan]="5">
+                        Nenhum registro encontrado!
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-dialog *ngIf="conta"
+          header="CONTA" [(visible)]="displayDialogConta"
+          modal="true"
+          closable="false"
+          [contentStyle]="{'overflow':'visible', 'max-width': '800px', 'overflow-y': 'auto', 'max-height': '600px'}"
+          [responsive]="true"
+          [baseZIndex]="10000">
+    <form novalidate name="editFormMovimento" role="form" #editFormMovimento="ngForm">
+        <div class="modal-body ui-g">
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-12 ui-md-12">
+
+                    <div class="ui-g-12 ui-md-12">
+                        <label class="campoLabel">CPF: </label>
+                        <div class="input-group">
+                            <input pInputText type="text"
+                                   name="cpf"
+                                   [(ngModel)]="conta.cpf"/>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-12">
+                        <label class="campoLabel">NOME: </label>
+                        <div class="input-group">
+                            <input pInputText type="text"
+                                   name="nome"
+                                   [(ngModel)]="conta.nome"/>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-12">
+                        <label class="campoLabel">SALDO: </label>
+                        <div class="input-group">
+                            <input pInputText type="text" name="edsaldo" id="edsaldo" currencyMask [(ngModel)]="conta.saldo" [options]="{ prefix: '', thousands: '.', decimal: ',' }"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-12">
+                    <div class="ui-g-6">
+                        <button type="submit" pButton icon="fa fa-save" [label]="'CONFIRMAR'"
+                                (click)="adicionaConta()"
+                                [disabled]="editFormMovimento.invalid"></button>
+                    </div>
+                    <div class="ui-g-6">
+                        <button type="button" pButton icon="fa fa-close" label="CANCELAR" class="red-btn"
+                                (click)="fecharDialogConta()"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</p-dialog>
