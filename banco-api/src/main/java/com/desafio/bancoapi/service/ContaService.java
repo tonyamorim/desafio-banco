@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface ContaService {
     Conta cadastrar(Conta conta);
+
     void alterar(Conta conta);
-    void excluir(Conta conta);
+
     List<Conta> consultarTodos();
 }

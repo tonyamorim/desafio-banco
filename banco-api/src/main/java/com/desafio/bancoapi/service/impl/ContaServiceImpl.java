@@ -31,11 +31,6 @@ public class ContaServiceImpl implements ContaService {
     }
 
     @Override
-    public void excluir(Conta conta) {
-        repository.excluir(conta);
-    }
-
-    @Override
     public void alterar(Conta conta) {
         repository.alterar(conta);
     }

@@ -4,9 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 
-import static com.desafio.bancoapi.util.Constants.MSG_MN001_CADASTRADO_COM_SUCESSO;
-import static com.desafio.bancoapi.util.Constants.MSG_MN002_ALTERADO_COM_SUCESSO;
-import static com.desafio.bancoapi.util.Constants.MSG_MN003_MSG_EXCLUSAO_COM_SUCESSO;
+import static com.desafio.bancoapi.config.Constants.*;
 
 
 public final class HeaderUtil {
@@ -33,6 +31,18 @@ public final class HeaderUtil {
 
     public static HttpHeaders criarAlertaExclusaoComSucesso() {
         return createAlert(MSG_MN003_MSG_EXCLUSAO_COM_SUCESSO, "");
+    }
+
+    public static HttpHeaders criarAlertaDepositoComSucesso() {
+        return createAlert(MSG_MN004_MSG_DEPOSITO_COM_SUCESSO, "");
+    }
+
+    public static HttpHeaders criarAlertaSaqueComSucesso() {
+        return createAlert(MSG_MN005_MSG_SAQUE_COM_SUCESSO, "");
+    }
+
+    public static HttpHeaders criarAlertaTranferenciaComSucesso() {
+        return createAlert(MSG_MN006_MSG_TRANFERENCIA_COM_SUCESSO, "");
     }
 
     public static HttpHeaders criarAviso(String mensagem) {

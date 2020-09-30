@@ -7,28 +7,36 @@ type EntityArrayResponseType = HttpResponse<any[]>;
 
 
 @Injectable()
-export class ContaService{
-      public resourceUrl = 'api/conta';
+export class ContaService {
+    public url = 'api/conta';
+    public urlDeposito = 'api/deposito';
+    public urlSaque = 'api/saque';
+    public urlTranferencia = 'api/tranferencia';
+
     constructor(public http: HttpClient) {
     }
 
     listarTodos(): Observable<any[]> {
-        return this.http.get<any[]>(`${environment.baseUrl}/${this.resourceUrl}`);
+        return this.http.get<any[]>( `${environment.baseUrl}/${this.url}` );
     }
 
     cadastrar(entidade: any): Observable<any> {
-        return this.http.post<any>( `${environment.baseUrl}/${this.resourceUrl}`, entidade );
+        return this.http.post<any>( `${environment.baseUrl}/${this.url}`, entidade );
     }
 
     alterar(entidade: any): Observable<any> {
-        return this.http.put<any>( `${environment.baseUrl}/${this.resourceUrl}`, entidade );
+        return this.http.put<any>( `${environment.baseUrl}/${this.url}`, entidade );
     }
 
     consultarPorId(id): Observable<any> {
-        return this.http.get<any>( `${environment.baseUrl}/${this.resourceUrl}/${id}` );
+        return this.http.get<any>( `${environment.baseUrl}/${this.url}/${id}` );
     }
 
     excluir(id) {
-        return this.http.delete<any>( `${environment.baseUrl}/${this.resourceUrl}/${id}`, {observe: 'response'} );
+        return this.http.delete<any>( `${environment.baseUrl}/${this.url}/${id}`, {observe: 'response'} );
+    }
+
+    depositar(deposito: any) {
+        return this.http.post<any>( `${environment.baseUrl}/${this.urlDeposito}`, deposito );
     }
 }

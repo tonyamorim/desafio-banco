@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.desafio.bancoapi.util.Constants.URL_API;
-import static com.desafio.bancoapi.util.Constants.URL_CONTA;
+import static com.desafio.bancoapi.config.Constants.URL_API;
+import static com.desafio.bancoapi.config.Constants.URL_CONTA;
 import static com.desafio.bancoapi.util.HeaderUtil.criarAlertaCadastradoComSucesso;
-import static com.desafio.bancoapi.util.HeaderUtil.criarAlertaExclusaoComSucesso;
 import static org.springframework.http.ResponseEntity.ok;
 
 @CrossOrigin("*")
@@ -28,19 +27,6 @@ public class ContaController {
         service.cadastrar(conta);
         return ok().headers(criarAlertaCadastradoComSucesso()).body(conta);
     }
-
-    @PutMapping(URL_CONTA)
-    public ResponseEntity<Conta> alterar(@RequestBody Conta conta) throws NegocioException {
-        service.alterar(conta);
-        return ok().headers(criarAlertaCadastradoComSucesso()).body(conta);
-    }
-
-    @DeleteMapping(URL_CONTA)
-    public ResponseEntity<Void> excluir(@RequestBody Conta conta) throws NegocioException {
-        service.excluir(conta);
-        return ok().headers(criarAlertaExclusaoComSucesso()).build();
-    }
-
     @GetMapping(URL_CONTA)
     public List<Conta> listar() {
         return service.consultarTodos();

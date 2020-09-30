@@ -2,12 +2,12 @@ package com.desafio.bancoapi.repository.impl;
 
 import com.desafio.bancoapi.model.Conta;
 import com.desafio.bancoapi.repository.ContaRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Repository
 public class ContaRepositoryImpl implements ContaRepository {
     private List<Conta> contas = new ArrayList<>();
     @Override

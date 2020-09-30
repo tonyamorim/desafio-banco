@@ -25,9 +25,20 @@
             <ng-template pTemplate="body" let-contaLista>
                 <tr>
                     <td align="center">
-                        <button pButton type="button" label="DEPÓSITO" title="DEPÓSITO" ></button>
-                        <button pButton type="button" label="SAQUE" title="SAQUE" class="red-btn" ></button>
-                        <button pButton type="button" label="TRANF" title="TRANFERÊNCIA" class="red-btn" ></button>
+                        <button pButton type="button"
+                                (click)="prepararParaAdicionarDeposito(contaLista)"
+                                label="DEPÓSITO" 
+                                title="DEPÓSITO" ></button>
+                        <button pButton type="button"
+                                (click)="prepararParaAdicionarSaque(contaLista)"
+                                label="SAQUE" 
+                                title="SAQUE" 
+                                class="red-btn" ></button>
+                        <button pButton type="button"
+                                (click)="prepararParaAdicionarTranferencia(contaLista)"
+                                label="TRANF" 
+                                title="TRANFERÊNCIA" 
+                                class="red-btn" ></button>
                     </td>
                     <td align="center">{{contaLista.cpf | cpf}}</td>
                     <td align="left">{{contaLista.nome}}</td>
@@ -90,6 +101,131 @@
                     <div class="ui-g-6">
                         <button type="button" pButton icon="fa fa-close" label="CANCELAR" class="red-btn"
                                 (click)="fecharDialogConta()"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</p-dialog>
+
+
+<p-dialog *ngIf="deposito"
+          header="DEPÓSITO" [(visible)]="displayDialogDeposito"
+          modal="true"
+          closable="false"
+          [contentStyle]="{'overflow':'visible', 'max-width': '800px', 'overflow-y': 'auto', 'max-height': '600px'}"
+          [responsive]="true"
+          [baseZIndex]="10000">
+    <form novalidate name="editFormDeposito" role="form" #editFormDeposito="ngForm">
+        <div class="modal-body ui-g">
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-12 ui-md-12">
+
+                    <div class="ui-g-12 ui-md-12">
+                        <label class="campoLabel">CONTA: </label>
+                        <div class="input-group">
+                            {{conta.numero}}
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-12">
+                        <label class="campoLabel">VALOR: </label>
+                        <div class="input-group">
+                            <input pInputText type="text" name="valorDeposito" id="valorDeposito" currencyMask [(ngModel)]="deposito.valor" [options]="{ prefix: '', thousands: '.', decimal: ',' }"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-12">
+                    <div class="ui-g-6">
+                        <button type="submit" pButton icon="fa fa-save" [label]="'CONFIRMAR'"
+                                (click)="depositar()"
+                                [disabled]="editFormDeposito.invalid"></button>
+                    </div>
+                    <div class="ui-g-6">
+                        <button type="button" pButton icon="fa fa-close" label="CANCELAR" class="red-btn"
+                                (click)="fecharDialogDeposito()"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</p-dialog>
+
+
+<p-dialog *ngIf="saque"
+          header="SAQUE" [(visible)]="displayDialogSaque"
+          modal="true"
+          closable="false"
+          [contentStyle]="{'overflow':'visible', 'max-width': '800px', 'overflow-y': 'auto', 'max-height': '600px'}"
+          [responsive]="true"
+          [baseZIndex]="10000">
+    <form novalidate name="editFormSaque" role="form" #editFormSaque="ngForm">
+        <div class="modal-body ui-g">
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-12 ui-md-12">
+
+                    <div class="ui-g-12 ui-md-12">
+                        <label class="campoLabel">CONTA: </label>
+                        <div class="input-group">
+                            {{conta.numero}}
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-12">
+                        <label class="campoLabel">VALOR: </label>
+                        <div class="input-group">
+                            <input pInputText type="text" name="valorSaque" id="valorSaque" currencyMask [(ngModel)]="saque.valor" [options]="{ prefix: '', thousands: '.', decimal: ',' }"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-12">
+                    <div class="ui-g-6">
+                        <button type="submit" pButton icon="fa fa-save" [label]="'CONFIRMAR'"
+                                (click)="adicionaSaque()"
+                                [disabled]="editFormSaque.invalid"></button>
+                    </div>
+                    <div class="ui-g-6">
+                        <button type="button" pButton icon="fa fa-close" label="CANCELAR" class="red-btn"
+                                (click)="fecharDialogSaque()"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</p-dialog>
+
+<p-dialog *ngIf="tranferencia"
+          header="TRANFERÊNCIA" [(visible)]="displayDialogTranferencia"
+          modal="true"
+          closable="false"
+          [contentStyle]="{'overflow':'visible', 'max-width': '800px', 'overflow-y': 'auto', 'max-height': '600px'}"
+          [responsive]="true"
+          [baseZIndex]="10000">
+    <form novalidate name="editFormTranferencia" role="form" #editFormTranferencia="ngForm">
+        <div class="modal-body ui-g">
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-12 ui-md-12">
+
+                    <div class="ui-g-12 ui-md-12">
+                        <label class="campoLabel">CONTA: </label>
+                        <div class="input-group">
+                            {{conta.numero}}
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-12">
+                        <label class="campoLabel">VALOR: </label>
+                        <div class="input-group">
+                            <input pInputText type="text" name="valorTranferencia" id="valorTranferencia" currencyMask [(ngModel)]="tranferencia.valor" [options]="{ prefix: '', thousands: '.', decimal: ',' }"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-12">
+                    <div class="ui-g-6">
+                        <button type="submit" pButton icon="fa fa-save" [label]="'CONFIRMAR'"
+                                (click)="adicionaTranferencia()"
+                                [disabled]="editFormTranferencia.invalid"></button>
+                    </div>
+                    <div class="ui-g-6">
+                        <button type="button" pButton icon="fa fa-close" label="CANCELAR" class="red-btn"
+                                (click)="fecharDialogTranferencia()"></button>
                     </div>
                 </div>
             </div>

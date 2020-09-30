@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {AlertaService} from "../../shared/alert/alerta.service";
 import {ContaService} from "./conta.service";
-import {Conta} from "./conta.model";
+import {Conta, Deposito, Saque, Tranferencia} from "./conta.model";
 import {Observable} from "rxjs";
 
 @Component( {
@@ -16,7 +16,13 @@ export class ContaComponent implements OnInit {
     error: any;
     success: any;
     conta: Conta;
+    deposito: Deposito;
+    saque: Saque;
+    tranferencia: Tranferencia;
     displayDialogConta: boolean;
+    displayDialogDeposito: boolean;
+    displayDialogSaque: boolean;
+    displayDialogTranferencia: boolean;
 
     constructor(
         private contaService: ContaService,
@@ -61,19 +67,61 @@ export class ContaComponent implements OnInit {
         this.conta = new Conta();
     }
 
+    prepararParaAdicionarDeposito(conta) {
+        this.conta = conta;
+        this.displayDialogDeposito = true;
+        this.deposito = new Deposito();
+        this.deposito.conta = conta;
+    }
+
+    prepararParaAdicionarSaque(conta) {
+        this.conta = conta;
+        this.displayDialogSaque = true;
+        this.saque = new Saque();
+    }
+
+    prepararParaAdicionarTranferencia(conta) {
+        this.conta = conta;
+        this.displayDialogTranferencia = true;
+        this.tranferencia = new Tranferencia();
+    }
+
     adicionaConta() {
         if (this.novaConta()) {
             this.criarListaDeContasCasoEstajaVazia();
-            this.adicionaContaNaLista();
+            this.cadastrar();
         }
         this.fecharDialogConta();
+    }
 
+    depositar() {
+        this.subscribeDepositarResponse( this.contaService.depositar( this.deposito ) );
+        this.fecharDialogDeposito();
+    }
+
+    adicionaSaque() {
+        this.fecharDialogSaque();
+    }
+
+    adicionaTranferencia() {
+        this.fecharDialogTranferencia();
     }
 
     fecharDialogConta() {
         this.displayDialogConta = false;
     }
 
+    fecharDialogDeposito() {
+        this.displayDialogDeposito = false;
+    }
+
+    fecharDialogSaque() {
+        this.displayDialogSaque = false;
+    }
+
+    fecharDialogTranferencia() {
+        this.displayDialogTranferencia = false;
+    }
 
     private novaConta() {
         return (!this.conta.numero);
@@ -85,14 +133,21 @@ export class ContaComponent implements OnInit {
         }
     }
 
-    private adicionaContaNaLista() {
-        this.subscribeToSaveResponse( this.contaService.cadastrar( this.conta ) );
-
+    private cadastrar() {
+        this.subscribeSalvarResponse( this.contaService.cadastrar( this.conta ) );
     }
 
-    private subscribeToSaveResponse(observable: Observable<any>) {
+    private subscribeSalvarResponse(observable: Observable<any>) {
         observable.subscribe( (res: any) => {
             this.conta = res;
+            this.consultarTodos();
+        } );
+    }
+
+    private subscribeDepositarResponse(observable: Observable<any>) {
+        observable.subscribe( (res: any) => {
+            this.deposito = res;
+            this.alertaService.exibirInformacao("Depósito realizado com sucesso!")
             this.consultarTodos();
         } );
     }
