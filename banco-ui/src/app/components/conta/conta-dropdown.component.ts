@@ -28,7 +28,6 @@ export class ContaDropdownComponent implements OnInit {
     @Output() value: EventEmitter<any> = new EventEmitter<any>();
 
     @Input() conta: any;
-    @Input() contaOrigem: any;
     @Input() autoWidth: boolean = true;
     @Input() disabled = false;
     @Input() placeholder = "SELECIONE UMA CONTA";
@@ -46,22 +45,9 @@ export class ContaDropdownComponent implements OnInit {
     ngOnInit() {
         this.service.listarTodos().subscribe(res => {
             this.contas = res;
-            this.removerContaOrigemDoDestino();
         })
 
     };
-
-    private removerContaOrigemDoDestino() {
-        let index = -1;
-        let indexParaRemover = -1;
-        this.contas.forEach(value => {
-            index += 1;
-            if (value.numero == this.contaOrigem.numero) {
-                indexParaRemover = index;
-            }
-        })
-        this.contas.splice(indexParaRemover, 1);
-    }
 
     onchange() {
         this.value.emit( this.conta );

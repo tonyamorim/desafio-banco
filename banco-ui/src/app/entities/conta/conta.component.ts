@@ -64,9 +64,7 @@ export class ContaComponent implements OnInit {
 
     prepararParaAdicionarConta() {
         this.displayDialogConta = true;
-        if (!this.conta) {
-            this.inicializarConta();
-        }
+        this.inicializar();
     }
 
     prepararParaAdicionarDeposito(conta) {
@@ -93,7 +91,7 @@ export class ContaComponent implements OnInit {
     adicionaConta() {
         if (this.novaConta()) {
             this.criarListaDeContasCasoEstajaVazia();
-            this.cadastrar();
+            this.salvarConta();
         }
         this.fecharDialogConta();
     }
@@ -114,18 +112,22 @@ export class ContaComponent implements OnInit {
     }
 
     fecharDialogConta() {
+        this.limparObjetos();
         this.displayDialogConta = false;
     }
 
     fecharDialogDeposito() {
+        this.limparObjetos();
         this.displayDialogDeposito = false;
     }
 
     fecharDialogSaque() {
+        this.limparObjetos();
         this.displayDialogSaque = false;
     }
 
     fecharDialogTranferencia() {
+        this.limparObjetos();
         this.displayDialogTranferencia = false;
     }
 
@@ -139,26 +141,33 @@ export class ContaComponent implements OnInit {
         }
     }
 
-    private cadastrar() {
-        this.subscribeSalvarResponse( this.contaService.cadastrar( this.conta ) );
+    private salvarConta() {
+        this.subscribeCriarContaResponse( this.contaService.cadastrar( this.conta ) );
     }
 
-    private subscribeSalvarResponse(observable: Observable<any>) {
+    private subscribeCriarContaResponse(observable: Observable<any>) {
         observable.subscribe( (res: any) => {
-            this.inicializarConta();
+            this.limparObjetos()
             this.consultarTodos();
         } );
     }
 
-    private inicializarConta() {
+    private inicializar() {
         this.conta = new Conta();
+    }
+
+    private limparObjetos() {
+        this.conta = null;
+        this.deposito = null;
+        this.saque = null;
+        this.tranferencia = null
     }
 
     private subscribeDepositarResponse(observable: Observable<any>) {
         observable.subscribe( (res: any) => {
             this.deposito = res;
             this.alertaService.exibirInformacao("Depósito realizado com sucesso!")
-            this.inicializarConta();
+            this.limparObjetos()
             this.consultarTodos();
         } );
     }
@@ -167,7 +176,7 @@ export class ContaComponent implements OnInit {
         observable.subscribe( (res: any) => {
             this.saque = res;
             this.alertaService.exibirInformacao("Saque realizado com sucesso!")
-            this.inicializarConta();
+            this.limparObjetos()
             this.consultarTodos();
         } );
     }
@@ -176,13 +185,14 @@ export class ContaComponent implements OnInit {
         observable.subscribe( (res: any) => {
             this.tranferencia = res;
             this.alertaService.exibirInformacao("Tranferência realizado com sucesso!")
-            this.inicializarConta();
+            this.limparObjetos()
             this.consultarTodos();
         } );
     }
 
     setContaDestino(conta) {
         this.tranferencia.contaDestino = conta;
+
     }
 
     removeContaDestino() {

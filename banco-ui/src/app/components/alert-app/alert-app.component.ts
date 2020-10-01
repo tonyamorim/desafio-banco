@@ -4,7 +4,7 @@ import {Message} from 'primeng/primeng';
 
 @Component({
     selector: 'app-alert-sys',
-    template: '<p-messages [value]=\'getMessages()\' ></p-messages>'
+    template: '<p-messages [value]=\'getMessages()\'></p-messages>'
 })
 export class AlertAppComponent implements OnInit {
 

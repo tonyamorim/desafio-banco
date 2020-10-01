@@ -60,7 +60,7 @@
 <p-dialog *ngIf="conta"
           header="CONTA" [(visible)]="displayDialogConta"
           modal="true"
-          closable="false"
+          [closable]="false"
           [contentStyle]="{'overflow':'visible', 'max-width': '800px', 'overflow-y': 'auto', 'max-height': '600px'}"
           [responsive]="true"
           [baseZIndex]="10000">
@@ -116,7 +116,7 @@
 <p-dialog *ngIf="deposito"
           header="DEPÓSITO" [(visible)]="displayDialogDeposito"
           modal="true"
-          closable="false"
+          [closable]="false"
           [contentStyle]="{'overflow':'visible', 'max-width': '800px', 'overflow-y': 'auto', 'max-height': '600px'}"
           [responsive]="true"
           [baseZIndex]="10000">
@@ -164,7 +164,7 @@
 <p-dialog *ngIf="saque"
           header="SAQUE" [(visible)]="displayDialogSaque"
           modal="true"
-          closable="false"
+          [closable]="false"
           [contentStyle]="{'overflow':'visible', 'max-width': '800px', 'overflow-y': 'auto', 'max-height': '600px'}"
           [responsive]="true"
           [baseZIndex]="10000">
@@ -211,7 +211,7 @@
 <p-dialog *ngIf="tranferencia"
           header="TRANFERÊNCIA" [(visible)]="displayDialogTranferencia"
           modal="true"
-          closable="false"
+          [closable]="false"
           [contentStyle]="{'overflow':'visible', 'max-width': '800px', 'overflow-y': 'auto', 'max-height': '600px'}"
           [responsive]="true"
           [baseZIndex]="10000">
@@ -237,6 +237,17 @@
                                     [contaOrigem]="conta"
                                     [required]="true"
                                     [contaRemovida]="conta"></conta-dropdown>
+                            <div class="ui-g" *ngIf="tranferencia.contaDestino != null"
+                                 style="background-color: #F7C223">
+                                <div class="ui-g-3">
+                                    <label class="campoLabel">CPF:</label>
+                                    {{tranferencia.contaDestino.cpf | cpf}}
+                                </div>
+                                <div class="ui-g-9">
+                                    <label class="campoLabel">NOME:</label>
+                                    {{tranferencia.contaDestino.nome}}
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-12">
@@ -256,7 +267,7 @@
                     <div class="ui-g-6">
                         <button type="submit" pButton icon="fa fa-save" [label]="'CONFIRMAR'"
                                 (click)="tranferir()"
-                                [disabled]="editFormTranferencia.invalid"></button>
+                                [disabled]="editFormTranferencia.invalid || !tranferencia.contaDestino || tranferencia.contaDestino.numero  == this.tranferencia.contaOrigem.numero"></button>
                     </div>
                     <div class="ui-g-6">
                         <button type="button" pButton icon="fa fa-close" label="CANCELAR" class="red-btn"
