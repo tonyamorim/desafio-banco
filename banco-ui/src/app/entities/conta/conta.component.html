@@ -4,10 +4,10 @@
     <p-toolbar>
         <div class="ui-g">
             <div class="ui-g-12 ui-md-6" style="text-align: left;">
-                <button pButton type="button" icon="fa fa-plus" class="secondary" label="NOVO"
+                <button pButton type="button" icon="fa fa-plus" class="secondary" label="CRIAR CONTA"
                         style="color: white"
                         (click)="prepararParaAdicionarConta()"
-                        title="NOVO" ></button>
+                        title="CLIQUE AQUI PARA CRIAR UMA NOVA CONTA" ></button>
             </div>
         </div>
     </p-toolbar>
@@ -88,7 +88,11 @@
                     <div class="ui-g-12 ui-md-12">
                         <label class="campoLabel">SALDO: </label>
                         <div class="input-group">
-                            <input pInputText type="text" name="edsaldo" id="edsaldo" currencyMask [(ngModel)]="conta.saldo" [options]="{ prefix: '', thousands: '.', decimal: ',' }"/>
+                            <input pInputText type="text"
+                                   name="edsaldo" id="edsaldo"
+                                   required="true"
+                                   currencyMask [(ngModel)]="conta.saldo"
+                                   [options]="{ prefix: '', thousands: '.', decimal: ',' }"/>
                         </div>
                     </div>
                 </div>
@@ -124,13 +128,19 @@
                     <div class="ui-g-12 ui-md-12">
                         <label class="campoLabel">CONTA: </label>
                         <div class="input-group">
-                            {{conta.numero}}
+                            {{conta.numero}} - {{conta.cpf | cpf}} - {{conta.nome}}
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-12">
                         <label class="campoLabel">VALOR: </label>
                         <div class="input-group">
-                            <input pInputText type="text" name="valorDeposito" id="valorDeposito" currencyMask [(ngModel)]="deposito.valor" [options]="{ prefix: '', thousands: '.', decimal: ',' }"/>
+                            <input pInputText type="text"
+                                   name="valorDeposito"
+                                   id="valorDeposito"
+                                   required="true"
+                                   currencyMask
+                                   [(ngModel)]="deposito.valor"
+                                   [options]="{ prefix: '', thousands: '.', decimal: ',' }"/>
                         </div>
                     </div>
                 </div>
@@ -166,20 +176,26 @@
                     <div class="ui-g-12 ui-md-12">
                         <label class="campoLabel">CONTA: </label>
                         <div class="input-group">
-                            {{conta.numero}}
+                            {{conta.numero}} - {{conta.cpf | cpf}} - {{conta.nome}}
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-12">
                         <label class="campoLabel">VALOR: </label>
                         <div class="input-group">
-                            <input pInputText type="text" name="valorSaque" id="valorSaque" currencyMask [(ngModel)]="saque.valor" [options]="{ prefix: '', thousands: '.', decimal: ',' }"/>
+                            <input pInputText type="text"
+                                   name="valorSaque"
+                                   id="valorSaque"
+                                   required="true"
+                                   currencyMask
+                                   [(ngModel)]="saque.valor"
+                                   [options]="{ prefix: '', thousands: '.', decimal: ',' }"/>
                         </div>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-12">
                     <div class="ui-g-6">
                         <button type="submit" pButton icon="fa fa-save" [label]="'CONFIRMAR'"
-                                (click)="adicionaSaque()"
+                                (click)="sacar()"
                                 [disabled]="editFormSaque.invalid"></button>
                     </div>
                     <div class="ui-g-6">
@@ -205,22 +221,41 @@
                 <div class="ui-g-12 ui-md-12">
 
                     <div class="ui-g-12 ui-md-12">
-                        <label class="campoLabel">CONTA: </label>
+                        <label class="campoLabel">CONTA ORIGEM: </label>
                         <div class="input-group">
-                            {{conta.numero}}
+                            {{conta.numero}} - {{conta.cpf | cpf}} - {{conta.nome}}
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-12">
+                        <label class="campoLabel">CONTA DESTINO: </label>
+                        <div class="input-group">
+                            <conta-dropdown
+                                    (value)="setContaDestino($event)"
+                                    (onclear)="removeContaDestino()"
+                                    required="true"
+                                    id="contaDestino"
+                                    [contaOrigem]="conta"
+                                    [required]="true"
+                                    [contaRemovida]="conta"></conta-dropdown>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-12">
                         <label class="campoLabel">VALOR: </label>
                         <div class="input-group">
-                            <input pInputText type="text" name="valorTranferencia" id="valorTranferencia" currencyMask [(ngModel)]="tranferencia.valor" [options]="{ prefix: '', thousands: '.', decimal: ',' }"/>
+                            <input pInputText type="text"
+                                   name="valorTranferencia"
+                                   id="valorTranferencia"
+                                   required="true"
+                                   currencyMask
+                                   [(ngModel)]="tranferencia.valor"
+                                   [options]="{ prefix: '', thousands: '.', decimal: ',' }"/>
                         </div>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-12">
                     <div class="ui-g-6">
                         <button type="submit" pButton icon="fa fa-save" [label]="'CONFIRMAR'"
-                                (click)="adicionaTranferencia()"
+                                (click)="tranferir()"
                                 [disabled]="editFormTranferencia.invalid"></button>
                     </div>
                     <div class="ui-g-6">

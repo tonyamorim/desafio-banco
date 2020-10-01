@@ -6,19 +6,20 @@ import com.desafio.bancoapi.service.ContaService;
 import com.desafio.bancoapi.util.NegocioException;
 import com.desafio.bancoapi.util.StringUtil;
 import com.desafio.bancoapi.util.VerificadorCPFUtil;
+import com.desafio.bancoapi.util.VerificadorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Random;
 
+import static com.desafio.bancoapi.config.Constants.*;
+
 @Service
 public class ContaServiceImpl implements ContaService {
 
-    private static final String MENSAGEM_VALOR_MENOR_QUE_LIMITE = "Saldo insuficiente para abertura de nova conta.";
-    private static final Double VALOR_LIMITE = 50.0;
-    private static final String MENSAGEM_CPF_OBRIGATORIO = "É necessário informar um cpf para abertura de nova conta.";
-    private static final String MENSAGEM_CPF_INVALIDO = "CPF informado para criação de conta está inválido.";
+
+
     @Autowired
     ContaRepository repository;
 
@@ -46,9 +47,16 @@ public class ContaServiceImpl implements ContaService {
     }
 
     private void regrasNegocioCadastrar(Conta conta){
+        lancarExcecaoCasoDadosInconsistente(conta);
         lancarExcecaoCasoBalancoMenorQueLimite(conta);
         lancarExececaoCasoCPFVazio(conta);
         lancarExececaoCasaoCPFInvalido(conta);
+    }
+
+    private void lancarExcecaoCasoDadosInconsistente(Conta conta) {
+        if (VerificadorUtil.estaNuloOuVazio(conta)){
+            throw new NegocioException(MENSAGEM_ERRO_INCONSISTENCIA);
+        }
     }
 
     private void lancarExececaoCasaoCPFInvalido(Conta conta) throws NegocioException {
@@ -63,13 +71,13 @@ public class ContaServiceImpl implements ContaService {
     }
 
     private void lancarExececaoCasoCPFVazio(Conta conta) throws NegocioException {
-        if (conta.getCpf() == null || conta.getCpf().isEmpty()) {
+        if (VerificadorUtil.estaNuloOuVazio(conta.getCpf())) {
             throw new NegocioException(MENSAGEM_CPF_OBRIGATORIO);
         }
     }
 
     private void lancarExcecaoCasoBalancoMenorQueLimite(Conta conta) throws NegocioException {
-        if (conta.getSaldo().isNaN() || conta.getSaldo() < VALOR_LIMITE) {
+        if (conta.getSaldo() < VALOR_LIMITE_ABERTURA) {
             throw new NegocioException(MENSAGEM_VALOR_MENOR_QUE_LIMITE);
         }
     }

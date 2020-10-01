@@ -22,27 +22,27 @@ public final class HeaderUtil {
     }
 
     public static HttpHeaders criarAlertaCadastradoComSucesso() {
-        return createAlert(MSG_MN001_CADASTRADO_COM_SUCESSO, "");
+        return createAlert(CADASTRADO_COM_SUCESSO, "");
     }
 
     public static HttpHeaders criarAlertaAlteradoComSucesso() {
-        return createAlert(MSG_MN002_ALTERADO_COM_SUCESSO, "");
+        return createAlert(ALTERADO_COM_SUCESSO, "");
     }
 
     public static HttpHeaders criarAlertaExclusaoComSucesso() {
-        return createAlert(MSG_MN003_MSG_EXCLUSAO_COM_SUCESSO, "");
+        return createAlert(EXCLUSAO_COM_SUCESSO, "");
     }
 
     public static HttpHeaders criarAlertaDepositoComSucesso() {
-        return createAlert(MSG_MN004_MSG_DEPOSITO_COM_SUCESSO, "");
+        return createAlert(DEPOSITO_COM_SUCESSO, "");
     }
 
     public static HttpHeaders criarAlertaSaqueComSucesso() {
-        return createAlert(MSG_MN005_MSG_SAQUE_COM_SUCESSO, "");
+        return createAlert(SAQUE_COM_SUCESSO, "");
     }
 
     public static HttpHeaders criarAlertaTranferenciaComSucesso() {
-        return createAlert(MSG_MN006_MSG_TRANFERENCIA_COM_SUCESSO, "");
+        return createAlert(TRANFERENCIA_COM_SUCESSO, "");
     }
 
     public static HttpHeaders criarAviso(String mensagem) {

@@ -64,26 +64,30 @@ export class ContaComponent implements OnInit {
 
     prepararParaAdicionarConta() {
         this.displayDialogConta = true;
-        this.conta = new Conta();
+        if (!this.conta) {
+            this.inicializarConta();
+        }
     }
 
     prepararParaAdicionarDeposito(conta) {
         this.conta = conta;
-        this.displayDialogDeposito = true;
         this.deposito = new Deposito();
         this.deposito.conta = conta;
+        this.displayDialogDeposito = true;
     }
 
     prepararParaAdicionarSaque(conta) {
         this.conta = conta;
-        this.displayDialogSaque = true;
         this.saque = new Saque();
+        this.saque.conta = conta;
+        this.displayDialogSaque = true;
     }
 
     prepararParaAdicionarTranferencia(conta) {
         this.conta = conta;
-        this.displayDialogTranferencia = true;
         this.tranferencia = new Tranferencia();
+        this.tranferencia.contaOrigem = conta;
+        this.displayDialogTranferencia = true;
     }
 
     adicionaConta() {
@@ -99,11 +103,13 @@ export class ContaComponent implements OnInit {
         this.fecharDialogDeposito();
     }
 
-    adicionaSaque() {
+    sacar() {
+        this.subscribeSacarResponse( this.contaService.sacar( this.saque ) );
         this.fecharDialogSaque();
     }
 
-    adicionaTranferencia() {
+    tranferir() {
+        this.subscribeTranferirResponse( this.contaService.tranferir( this.tranferencia ) );
         this.fecharDialogTranferencia();
     }
 
@@ -139,16 +145,47 @@ export class ContaComponent implements OnInit {
 
     private subscribeSalvarResponse(observable: Observable<any>) {
         observable.subscribe( (res: any) => {
-            this.conta = res;
+            this.inicializarConta();
             this.consultarTodos();
         } );
+    }
+
+    private inicializarConta() {
+        this.conta = new Conta();
     }
 
     private subscribeDepositarResponse(observable: Observable<any>) {
         observable.subscribe( (res: any) => {
             this.deposito = res;
             this.alertaService.exibirInformacao("Depósito realizado com sucesso!")
+            this.inicializarConta();
             this.consultarTodos();
         } );
+    }
+
+    private subscribeSacarResponse(observable: Observable<any>) {
+        observable.subscribe( (res: any) => {
+            this.saque = res;
+            this.alertaService.exibirInformacao("Saque realizado com sucesso!")
+            this.inicializarConta();
+            this.consultarTodos();
+        } );
+    }
+
+    private subscribeTranferirResponse(observable: Observable<any>) {
+        observable.subscribe( (res: any) => {
+            this.tranferencia = res;
+            this.alertaService.exibirInformacao("Tranferência realizado com sucesso!")
+            this.inicializarConta();
+            this.consultarTodos();
+        } );
+    }
+
+    setContaDestino(conta) {
+        this.tranferencia.contaDestino = conta;
+    }
+
+    removeContaDestino() {
+        this.tranferencia.contaDestino = null
     }
 }

@@ -36,6 +36,7 @@ import {ContaService} from "./conta.service";
 import {SharedModule} from "../../shared/shared.module";
 import { CurrencyMaskModule } from "ng2-currency-mask";
 import {AlertAppModule} from "../../components/alert-app/alert-app.module";
+import {ContaDropdownComponent} from "../../components/conta/conta-dropdown.component";
 
 registerLocaleData(localePt);
 @NgModule( {
@@ -74,12 +75,16 @@ registerLocaleData(localePt);
         CurrencyMaskModule
     ],
     declarations: [
-        ContaComponent
+        ContaComponent,
+        ContaDropdownComponent
     ],
     entryComponents: [
-        ContaComponent
+        ContaComponent,
+        ContaDropdownComponent
     ],
-    exports: [],
+    exports: [
+        ContaDropdownComponent
+    ],
     providers: [
         ContaService,
         {provide: LOCALE_ID, useValue: 'pt-BR'}

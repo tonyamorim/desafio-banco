@@ -39,4 +39,12 @@ export class ContaService {
     depositar(deposito: any) {
         return this.http.post<any>( `${environment.baseUrl}/${this.urlDeposito}`, deposito );
     }
+
+    sacar(saque: any) {
+        return this.http.post<any>( `${environment.baseUrl}/${this.urlSaque}`, saque );
+    }
+
+    tranferir(tranferencia: any) {
+        return this.http.post<any>( `${environment.baseUrl}/${this.urlTranferencia}`, tranferencia );
+    }
 }
